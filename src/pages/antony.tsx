@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Spinner } from "../components/Spinner";
 
 type QuestionChainResponse = {
   prompt: string;
@@ -9,43 +10,50 @@ const User = (props: { prompt: string }) => {
   const { prompt } = props;
   return (
     <div className="flex w-full mt-2 space-x-3 max-w-xs">
-      <div className="flex-shrink-0 h-10 w-10 text-justify rounded bg-gray-300">
+      <div className="flex-shrink-0 h-10 w-10 p-1 text-center rounded bg-gray-300">
         User
       </div>
       <div>
         <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
           <p className="text-sm">{prompt}</p>
         </div>
-        <span className="text-xs text-gray-500 leading-none">2 min ago</span>
       </div>
     </div>
   );
 };
 
-const Assistant = (props: { response: string }) => {
+const Assistant = (props: { response: string; loading: boolean }) => {
   const { response } = props;
   return (
     <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-      <div>
-        <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-          <p className="text-sm">{response}</p>
+      {props.loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
+            <p className="text-sm">{response}</p>
+          </div>
         </div>
-        <span className="text-xs text-gray-500 leading-none">2 min ago</span>
-      </div>
+      )}
 
-      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">FM</div>
+      <div className="flex-shrink-0 h-10 w-10 p-1 text-center rounded bg-gray-300">
+        Bot
+      </div>
     </div>
   );
 };
 
-const Chat = (props: { responses: QuestionChainResponse[] }) => {
-  const { responses } = props;
+const Chat = (props: {
+  responses: QuestionChainResponse[];
+  loading: boolean;
+}) => {
+  const { loading, responses } = props;
   return (
     <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
       {responses?.map(({ prompt, response }, i) => (
         <div key={i}>
           <User prompt={prompt} />
-          <Assistant response={response as string} />
+          <Assistant response={response as string} loading={loading} />
         </div>
       ))}
     </div>
@@ -63,6 +71,7 @@ const Antony = () => {
 
     const controller = new AbortController();
     setLoading(true);
+    setResponses([{ prompt: currentQuestion }]);
 
     fetch("/api/titan", {
       method: "POST",
@@ -85,7 +94,7 @@ const Antony = () => {
   return (
     <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-10">
       <div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
-        <Chat responses={responses} />
+        <Chat responses={responses} loading={loading} />
 
         <div className="bg-gray-300 p-4">
           <form id="chatForm" onSubmit={e => handleQuestion(e)}>
