@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Spinner } from "../components/Spinner";
+import Spinner from "../components/Spinner";
 
 type QuestionChainResponse = {
   prompt: string;
