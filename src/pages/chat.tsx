@@ -5,7 +5,6 @@ import {
   setModel,
 } from "@/redux/chatSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectCount } from "../redux/counterSlice";
 
 const PromptForm = () => {
   const dispatch = useAppDispatch();

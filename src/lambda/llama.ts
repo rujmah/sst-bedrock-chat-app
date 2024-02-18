@@ -10,7 +10,7 @@ const client = new BedrockRuntimeClient({
   region: "us-east-1",
 });
 
-const modelId = "meta.llama2-70b-chat-v1";
+const modelId = "meta.llama2-13b-chat-v1";
 
 /* 
 {

@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counterSlice";
 import chatReducer from "./chatSlice";
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
     chat: chatReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
