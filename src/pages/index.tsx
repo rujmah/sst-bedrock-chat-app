@@ -1,9 +1,5 @@
-import Antony from "./antony";
+import ChatPage from "./chat";
 
 export default function Home() {
-  return (
-    <div>
-      <Antony />
-    </div>
-  );
+  return <ChatPage />;
 }

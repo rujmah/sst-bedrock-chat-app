@@ -12,20 +12,29 @@ export default {
   stacks(app) {
     app.stack(function Site({ stack }) {
       const api = new Api(stack, "api", {
+        defaults: {
+          function: {
+            initialPolicy: [
+              new PolicyStatement({
+                effect: Effect.ALLOW,
+                actions: [
+                  "bedrock-runtime:InvokeModel", // Is this needed?
+                  "bedrock:InvokeModel", // This is the permission that worked
+                ],
+                resources: ["*"], // TODO: restrict to specific model
+              }),
+            ],
+          },
+        },
         routes: {
-          "POST /prompt": {
+          "POST /titan": {
             function: {
               handler: "src/lambda/titan.handler",
-              initialPolicy: [
-                new PolicyStatement({
-                  effect: Effect.ALLOW,
-                  actions: [
-                    "bedrock-runtime:InvokeModel", // Is this needed?
-                    "bedrock:InvokeModel", // This is the permission that worked
-                  ],
-                  resources: ["*"], // TODO: restrict to specific model
-                }),
-              ],
+            },
+          },
+          "POST /llama": {
+            function: {
+              handler: "src/lambda/llama.handler",
             },
           },
         },
