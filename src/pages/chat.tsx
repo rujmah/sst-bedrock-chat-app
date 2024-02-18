@@ -22,7 +22,7 @@ const PromptForm = () => {
 
   return (
     <div className="basic-box">
-      <form className="flex" onClick={evt => handleSubmit(evt)}>
+      <form className="flex" onSubmit={evt => handleSubmit(evt)}>
         <textarea
           name="prompt"
           className="text-input mr-2 flex-grow"
@@ -30,6 +30,16 @@ const PromptForm = () => {
         />
         <input type="submit" value="Send" className="btn" />
       </form>
+      <div className="pl-1 text-sm font-extralight">
+        <a
+          href="https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-a-prompt.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline "
+        >
+          Prompt Guide (opens in new tab)
+        </a>
+      </div>
     </div>
   );
 };
@@ -78,8 +88,7 @@ const ModelSelect = () => {
 
   return (
     <div className="basic-box">
-      Select a model [current:{" "}
-      {models.find(model => model.name === selectedModel)?.title}]
+      Select a model:
       <select
         className="select-box"
         name="model"
@@ -97,12 +106,27 @@ const ModelSelect = () => {
   );
 };
 
+const Colophon = () => {
+  return (
+    <div className="text-center text-sm font-extralight">
+      🪴 Made by{" "}
+      <a
+        href="https://github.com/rujmah/sst-bedrock-chat-app"
+        className=" bg-lime-200 hover:underline"
+      >
+        rujmah
+      </a>
+    </div>
+  );
+};
+
 const ChatPage = () => {
   return (
     <div className="mx-auto max-w-full p-2 md:p-10 ">
       <ChatView />
       <PromptForm />
       <ModelSelect />
+      <Colophon />
     </div>
   );
 };
