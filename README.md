@@ -93,7 +93,7 @@ See the lambda [titan](./src/lambda/titan.ts) and [llama](./src/lambda/llama.ts)
 
 The docs on the schemas are, at time of writing, are hard to find. Will update this document when I find more consistent documentation.
 
-## Redux
+## Redux Toolkit
 
 I have settled on [Redux](https://redux.js.org/) [Toolkit](https://redux-toolkit.js.org/) for the frontend app state management.
 

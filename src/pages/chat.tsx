@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const PromptForm = () => {
   const dispatch = useAppDispatch();
-  // const { selectedModel } = useAppSelector(state => state.chat);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -45,12 +44,17 @@ const PromptForm = () => {
 };
 
 const ChatView = () => {
-  const chat = useAppSelector(state => state.chat.chatItems);
+  const { chatItems: chat } = useAppSelector(state => state.chat);
   const { loading, error, latestPrompt } = useAppSelector(state => state.chat);
 
   return (
     <div className="basic-box">
-      <div>Chat</div>
+      <div className="font-bold font-mono">🦆 Chat Duck</div>
+      <div className="text-sm font-extralight">
+        This is a simple chat app (not a real duck) that uses an AI model to
+        generate responses to prompts. Select a model and start chatting
+        (quacking?)
+      </div>
       <div className="mt-2">
         {chat.map((item, index) => (
           <div key={index}>
@@ -82,7 +86,6 @@ const ModelSelect = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const modelValue = event.target.value as string;
-    console.log(modelValue);
     dispatch(setModel(modelValue));
   };
 
